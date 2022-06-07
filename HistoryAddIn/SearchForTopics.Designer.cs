@@ -104,6 +104,7 @@
             this.checkBoxSouthAfrica.TabIndex = 8;
             this.checkBoxSouthAfrica.Text = "Search South African History";
             this.checkBoxSouthAfrica.UseVisualStyleBackColor = true;
+            this.checkBoxSouthAfrica.CheckedChanged += new System.EventHandler(this.checkBoxSouthAfrica_CheckedChanged);
             // 
             // checkBoxWorldHistory
             // 
@@ -114,6 +115,7 @@
             this.checkBoxWorldHistory.TabIndex = 9;
             this.checkBoxWorldHistory.Text = "Search World History";
             this.checkBoxWorldHistory.UseVisualStyleBackColor = true;
+            this.checkBoxWorldHistory.CheckedChanged += new System.EventHandler(this.checkBoxWorldHistory_CheckedChanged);
             // 
             // SearchForTopics
             // 

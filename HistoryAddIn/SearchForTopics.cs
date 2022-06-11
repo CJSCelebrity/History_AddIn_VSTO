@@ -52,14 +52,15 @@ namespace HistoryAddIn
 
                         for (int i = 0; i < counterValue; i++)
                         {
-                            if (checkBoxSouthAfrica.Checked)
-                            {
-                                Common.ScrapeWeb($"https://www.sahistory.org.za/search?s={txtbxTopic.Text}#gsc.tab=0&gsc.q={txtbxTopic.Text}&gsc.page={counterValue}");
-                            }
-                            else
-                            {
-                                Common.ScrapeWeb($"https://www.britannica.com/search?query={txtbxTopic.Text}");
-                            }
+                            //if (checkBoxSouthAfrica.Checked)
+                            //{
+                            //    Common.ScrapeSouthAfricanHistoryWeb($"https://www.sahistory.org.za/search?s={txtbxTopic.Text}#gsc.tab=0&gsc.q={txtbxTopic.Text}&gsc.page={counterValue}");
+                            //}
+                            //else
+                            //{
+                            //COMPLETE THIS SCRAPER FIRST
+                                Common.ScrapeWorldHistoryWeb($"https://www.britannica.com/search?query={txtbxTopic.Text}");
+                            //}
                         }
                     }
                     catch (Exception)

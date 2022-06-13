@@ -7,10 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Spire.Doc;
-using Spire.Doc.Documents;
-using Spire.Doc.Fields;
-using Spire.Doc.Formatting;
+using Word = Microsoft.Office.Interop.Word;
+using Microsoft.Office.Tools.Word;
 
 namespace HistoryAddIn
 {
@@ -68,10 +66,10 @@ namespace HistoryAddIn
                 ParseWorldHistoryHTML(URL);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -96,13 +94,6 @@ namespace HistoryAddIn
 
         private static void ParseWorldHistoryHTML(string url)
         {
-            
-
-            object missing = System.Reflection.Missing.Value;
-
-            //Create a new word document object
-            //Word.Document doc = app.Documents.Add();
-
             const string xPath = "//a[@class='font-weight-bold font-18']";
             const string childXPath = "//section[@data-level='1']";
 
@@ -121,40 +112,27 @@ namespace HistoryAddIn
 
                 foreach (HtmlNode childNode in childDocument.DocumentNode.SelectNodes(childXPath))
                 {
-                    SelectionInsertText();
+                    var fileName = "HTML_For_" + attribute.Value + ".html";
+                    string directory = @"C:\History_Addin_HTML_Data\";
+
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    if (!File.Exists(fileName))
+                    {
+                        //using (StreamWriter streamWriter = File.CreateText(fileName)) 
+                        //{
+                        //    streamWriter.WriteLine()
+                        //}
+                    }
                     //Specifies a range of the word document so the text can be populated
-                    //Word.Range rng = app.ActiveDocument.Range(0, 0);
-                    //rng.Text = "New Text";
-                    //rng.Select();
-                    //range.Text
-                    //wordDocument.Content.SetRange(0, 0);
-                    //wordDocument.Content.Text = childNode.InnerHtml + Environment.NewLine;
-                    //Console.WriteLine(childNode);
+                    Word.Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
+                    rng.Text = childNode.InnerText;
+                    rng.Select();
                 }
             }
-        }
-
-        private static void SelectionInsertText()
-        {
-            Document document = new Document();
-            Section section = document.AddSection();
-            Paragraph paragraph = section.AddParagraph();
-
-            TextBox textBox = paragraph.AppendTextBox(180, 30);
-            textBox.Format.VerticalOrigin = VerticalOrigin.Margin;
-            textBox.Format.VerticalPosition = 100;
-            textBox.Format.HorizontalOrigin = HorizontalOrigin.Margin;
-            textBox.Format.HorizontalPosition = 50;
-            textBox.Format.NoLine = true;
-
-            CharacterFormat format = new CharacterFormat(document);
-            format.FontName = "Calibri";
-            format.FontSize = 15;
-            format.Bold = true;
-
-            Paragraph paragraph1 = textBox.Body.AddParagraph();
-            paragraph1.AppendText("This is my new document").ApplyCharacterFormat(format);
-            document.SaveToFile("result.docx", FileFormat.Docx);
         }
 
         private static async Task<string> CallUrl(string fullUrl)

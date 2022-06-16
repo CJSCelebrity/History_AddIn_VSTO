@@ -35,14 +35,12 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.numSearchCounter = new System.Windows.Forms.NumericUpDown();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.checkBoxSouthAfrica = new System.Windows.Forms.CheckBox();
-            this.checkBoxWorldHistory = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numSearchCounter)).BeginInit();
             this.SuspendLayout();
             // 
             // txtbxTopic
             // 
-            this.txtbxTopic.Location = new System.Drawing.Point(124, 46);
+            this.txtbxTopic.Location = new System.Drawing.Point(12, 39);
             this.txtbxTopic.Name = "txtbxTopic";
             this.txtbxTopic.Size = new System.Drawing.Size(165, 24);
             this.txtbxTopic.TabIndex = 0;
@@ -51,7 +49,7 @@
             // lblTopic
             // 
             this.lblTopic.AutoSize = true;
-            this.lblTopic.Location = new System.Drawing.Point(31, 46);
+            this.lblTopic.Location = new System.Drawing.Point(44, 19);
             this.lblTopic.Name = "lblTopic";
             this.lblTopic.Size = new System.Drawing.Size(42, 17);
             this.lblTopic.TabIndex = 3;
@@ -61,7 +59,7 @@
             // lblSearch
             // 
             this.lblSearch.AutoSize = true;
-            this.lblSearch.Location = new System.Drawing.Point(31, 94);
+            this.lblSearch.Location = new System.Drawing.Point(190, 19);
             this.lblSearch.Name = "lblSearch";
             this.lblSearch.Size = new System.Drawing.Size(232, 17);
             this.lblSearch.TabIndex = 4;
@@ -69,7 +67,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(177, 173);
+            this.btnSearch.Location = new System.Drawing.Point(175, 69);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 42);
             this.btnSearch.TabIndex = 5;
@@ -79,52 +77,31 @@
             // 
             // numSearchCounter
             // 
-            this.numSearchCounter.Location = new System.Drawing.Point(269, 92);
+            this.numSearchCounter.Location = new System.Drawing.Point(275, 39);
             this.numSearchCounter.Name = "numSearchCounter";
             this.numSearchCounter.Size = new System.Drawing.Size(42, 24);
             this.numSearchCounter.TabIndex = 6;
+            this.numSearchCounter.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numSearchCounter.ValueChanged += new System.EventHandler(this.numSearchCounter_ValueChanged);
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(76, 183);
+            this.progressBar1.Location = new System.Drawing.Point(12, 82);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(277, 23);
+            this.progressBar1.Size = new System.Drawing.Size(410, 23);
             this.progressBar1.TabIndex = 7;
             this.progressBar1.Visible = false;
-            // 
-            // checkBoxSouthAfrica
-            // 
-            this.checkBoxSouthAfrica.AutoSize = true;
-            this.checkBoxSouthAfrica.Checked = true;
-            this.checkBoxSouthAfrica.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxSouthAfrica.Location = new System.Drawing.Point(203, 136);
-            this.checkBoxSouthAfrica.Name = "checkBoxSouthAfrica";
-            this.checkBoxSouthAfrica.Size = new System.Drawing.Size(210, 21);
-            this.checkBoxSouthAfrica.TabIndex = 8;
-            this.checkBoxSouthAfrica.Text = "Search South African History";
-            this.checkBoxSouthAfrica.UseVisualStyleBackColor = true;
-            this.checkBoxSouthAfrica.CheckedChanged += new System.EventHandler(this.checkBoxSouthAfrica_CheckedChanged);
-            // 
-            // checkBoxWorldHistory
-            // 
-            this.checkBoxWorldHistory.AutoSize = true;
-            this.checkBoxWorldHistory.Location = new System.Drawing.Point(34, 136);
-            this.checkBoxWorldHistory.Name = "checkBoxWorldHistory";
-            this.checkBoxWorldHistory.Size = new System.Drawing.Size(163, 21);
-            this.checkBoxWorldHistory.TabIndex = 9;
-            this.checkBoxWorldHistory.Text = "Search World History";
-            this.checkBoxWorldHistory.UseVisualStyleBackColor = true;
-            this.checkBoxWorldHistory.CheckedChanged += new System.EventHandler(this.checkBoxWorldHistory_CheckedChanged);
             // 
             // SearchForTopics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Khaki;
-            this.ClientSize = new System.Drawing.Size(445, 249);
-            this.Controls.Add(this.checkBoxWorldHistory);
-            this.Controls.Add(this.checkBoxSouthAfrica);
+            this.ClientSize = new System.Drawing.Size(445, 144);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.numSearchCounter);
             this.Controls.Add(this.btnSearch);
@@ -135,6 +112,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SearchForTopics";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search For Topics";
             ((System.ComponentModel.ISupportInitialize)(this.numSearchCounter)).EndInit();
             this.ResumeLayout(false);
@@ -150,7 +128,5 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.NumericUpDown numSearchCounter;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.CheckBox checkBoxSouthAfrica;
-        private System.Windows.Forms.CheckBox checkBoxWorldHistory;
     }
 }

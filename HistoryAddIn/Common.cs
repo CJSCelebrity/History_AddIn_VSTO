@@ -1,14 +1,8 @@
 ﻿using HtmlAgilityPack;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Word = Microsoft.Office.Interop.Word;
-using Microsoft.Office.Tools.Word;
 
 namespace HistoryAddIn
 {
@@ -36,32 +30,12 @@ namespace HistoryAddIn
             File.WriteAllText(directoryFolder + logFileName, text);
         }
 
-        internal static void ScrapeSouthAfricanHistoryWeb(string URL)
-        {
-            try
-            {
-                //btnSearch.Visible = false;
-                //progressBar1.Visible = true;
-
-                var response = CallUrl(URL).Result;
-
-                var linkList = ParseSouthAfricanHistoryHTML(response);
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         internal static void ScrapeWorldHistoryWeb(string URL)
         {
             try
             {
                 //btnSearch.Visible = false;
                 //progressBar1.Visible = true;
-
-                //var response = CallUrl(URL).Result;
 
                 ParseWorldHistoryHTML(URL);
 
@@ -73,31 +47,13 @@ namespace HistoryAddIn
             }
         }
 
-        private static List<string> ParseSouthAfricanHistoryHTML(string html)
-        {
-            HtmlDocument htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
-            var programmerLinks = htmlDoc.DocumentNode.Descendants("li")
-                    .Where(node => !node.GetAttributeValue("class", "").Contains("tocsection")).ToList();
-
-            List<string> wikiLink = new List<string>();
-
-            foreach (var link in programmerLinks)
-            {
-                if (link.FirstChild.Attributes.Count > 0)
-                    wikiLink.Add("https://en.wikipedia.org/" + link.FirstChild.Attributes[0].Value);
-            }
-
-            return wikiLink;
-
-        }
-
         private static void ParseWorldHistoryHTML(string url)
         {
             const string xPath = "//a[@class='font-weight-bold font-18']";
             const string childXPath = "//section[@data-level='1']";
+            const string imgXPath = "//img";
 
-            HtmlDocument parentDocument = LoadHtml(url);
+            HtmlDocument parentDocument = CustomLoadHTML(url);
 
             //Load first initial page and scrape its data
             var htmlNodes = parentDocument.DocumentNode.SelectSingleNode(xPath);
@@ -108,8 +64,9 @@ namespace HistoryAddIn
                 string newUrl = worldSearchHistorySite + attribute.Value;
 
                 //Load second page and scrape its data.
-                HtmlDocument childDocument = LoadHtml(newUrl);
+                HtmlDocument childDocument = CustomLoadHTML(newUrl);
 
+                #region Display text from HTML file onto the Word Document
                 foreach (HtmlNode childNode in childDocument.DocumentNode.SelectNodes(childXPath))
                 {
                     var fileName = "HTML_For_" + attribute.Value + ".html";
@@ -127,23 +84,26 @@ namespace HistoryAddIn
                         //    streamWriter.WriteLine()
                         //}
                     }
+
                     //Specifies a range of the word document so the text can be populated
                     Word.Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
+                    childNode.InnerText.Replace("â€”", " ").Replace("Ã", " ").Replace("â€", " ").Replace("â€œ", " ");
                     rng.Text = childNode.InnerText;
                     rng.Select();
                 }
+                #endregion
+
+                #region Add the images from the HTML page
+                foreach (HtmlNode childNode in childDocument.DocumentNode.SelectNodes(imgXPath))
+                {
+                    HtmlAttribute imgAttribute = childNode.Attributes["src"];
+                    Globals.ThisAddIn.Application.Selection.InlineShapes.AddPicture(imgAttribute.Value);
+                }
+                #endregion
             }
         }
 
-        private static async Task<string> CallUrl(string fullUrl)
-        {
-            HttpClient client = new HttpClient();
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13;
-            client.DefaultRequestHeaders.Accept.Clear();
-            var response = client.GetStringAsync(fullUrl);
-            return await response;
-        }
-        private static HtmlDocument LoadHtml(string url) 
+        private static HtmlDocument CustomLoadHTML(string url) 
         {
             try
             {

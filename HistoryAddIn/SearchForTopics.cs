@@ -52,21 +52,12 @@ namespace HistoryAddIn
 
                         for (int i = 0; i < counterValue; i++)
                         {
-                            //if (checkBoxSouthAfrica.Checked)
-                            //{
-                            //    Common.ScrapeSouthAfricanHistoryWeb($"https://www.sahistory.org.za/search?s={txtbxTopic.Text}#gsc.tab=0&gsc.q={txtbxTopic.Text}&gsc.page={counterValue}");
-                            //}
-                            //else
-                            //{
-                            //COMPLETE THIS SCRAPER FIRST
-                                Common.ScrapeWorldHistoryWeb($"https://www.britannica.com/search?query={txtbxTopic.Text}");
-                            //}
+                            Common.ScrapeWorldHistoryWeb($"https://www.britannica.com/search?query={txtbxTopic.Text}");
                         }
                     }
                     catch (Exception ex)
                     {
-
-                        throw ex;
+                        Common.WriteToLog(ex.Message);
                     }
                    
                 }
@@ -80,16 +71,6 @@ namespace HistoryAddIn
             {
                 Dispose();
             }
-        }
-
-        private void checkBoxSouthAfrica_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxWorldHistory.Checked = false;
-        }
-
-        private void checkBoxWorldHistory_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxSouthAfrica.Checked = false;
         }
     }
 }
